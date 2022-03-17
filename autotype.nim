@@ -133,19 +133,25 @@ frame.wEvent_Menu  do (event: wEvent):
     echo fmt"X: {dx} / Y: {dy} - {rect}"
     minp.mi.mouseData = 0
     minp.mi.dwFlags = MOUSEEVENTF_MOVE or MOUSEEVENTF_ABSOLUTE
+    SendInput(1, minp, sizeof(minp))    
+    #frame.minimize()
+    ShowWindow(hwnd, SW_RESTORE)
+    BringWindowToTop(hwnd)
+    SetForegroundWindow(hwnd)    
+    minp.mi.time = 0
+    minp.mi.dwExtraInfo = GetMessageExtraInfo()
+    minp.mi.dwFlags = MOUSEEVENTF_LEFTDOWN 
     SendInput(1, minp, sizeof(minp))
-    minp.mi.dwFlags = MOUSEEVENTF_LEFTUP
-    frame.minimize()
-    SetForegroundWindow(hwnd)
-    SendInput(1, minp, sizeof(minp))
-    minp.mi.dwFlags = MOUSEEVENTF_LEFTUP
+    minp.mi.dwFlags = MOUSEEVENTF_LEFTUP 
     SendInput(1, minp, sizeof(minp))
   else:
-    frame.minimize()
+    #frame.minimize()
+    ShowWindow(hwnd, SW_RESTORE)
+    BringWindowToTop(hwnd)
     SetForegroundWindow(hwnd)
-  sleep(500)
+  sleep(400)
   for chr in inputText.toRunes():
-    sleep(20)
+    sleep(12)
     sendKey(chr)
 
 # Callback function for EnumWindows - called for each window enumerated
